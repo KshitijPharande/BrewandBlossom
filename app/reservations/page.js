@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import FadeIn from "@/components/FadeIn";
+import { toast } from "sonner";
 
 export default function ReservationsPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     name: "",
     date: "",
@@ -19,7 +21,20 @@ export default function ReservationsPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    
+    // Simulate network request
+    const promise = new Promise((resolve) => setTimeout(resolve, 1200));
+    
+    toast.promise(promise, {
+      loading: 'Sending your request...',
+      success: () => {
+        setSubmitted(true);
+        setIsSubmitting(false);
+        return 'Reservation request received!';
+      },
+      error: 'Failed to send request.',
+    });
   };
 
   return (
@@ -162,10 +177,11 @@ export default function ReservationsPage() {
               {/* Submit */}
               <button
                 type="submit"
-                className="text-link text-sm uppercase tracking-widest bg-transparent border-none cursor-pointer font-sans p-0"
+                disabled={isSubmitting}
+                className="text-link text-sm uppercase tracking-widest bg-transparent border-none cursor-pointer font-sans p-0 disabled:opacity-50"
                 id="reservation-submit"
               >
-                Confirm Reservation <span className="text-lg">→</span>
+                {isSubmitting ? "Processing..." : "Confirm Reservation"} <span className="text-lg">→</span>
               </button>
             </form>
           </FadeIn>

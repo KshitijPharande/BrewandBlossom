@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import PageTransition from "@/components/PageTransition";
+import { Toaster } from "sonner";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -54,6 +55,15 @@ export default function RootLayout({ children }) {
         </PageTransition>
         <Footer />
         <WhatsAppButton />
+        <Toaster position="bottom-center" toastOptions={{
+          style: {
+            background: '#FAF7F2',
+            color: '#2C1810',
+            border: '1px solid #F0EBE3',
+            fontFamily: 'var(--font-sans)',
+            borderRadius: '0px'
+          }
+        }} />
       </body>
     </html>
   );
